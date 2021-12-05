@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <title>Investy</title>
+  </head>
+
+  <body>
+    <div class="main">
+        <img src="../static/images/logo_mini.jpg" style="width: 100.8px;height: 90px;"></image>
+        <h1 text-align="center">Investy</h1>
+        <p>An interactive financial advising application for stock trading that generates Stock market sentimental analysis to predict stock appreciation and depreciation based on tweets on Twitter for a specific stock.</p>
+<!-- double check the method and class -->
+        <form action = "/getdata" method = "GET"  class = "pure-form">
+            <input class="form-control mr-sm-2" type = "text" placeholder = "Enter stock name" aria-label = "Search" name = "company_name" text-align="center">
+            <br> </br>
+            <button type="submit" class="btn btn-primary" value="Submit">Predict Stock Change</button>
+        </form>
+    </div>       
+    <div>
+        {% for portfolio in prediction %}
+        
+            <td>{{ portfolio }}</td>
+
+        {% endfor %}
+    </div> 
+  </body>
+</html>

@@ -1,0 +1,39 @@
+body {
+margin-top: 50px;
+}
+
+.lrg-heading {
+font-size: 48px;
+}
+
+.description {
+font-size: 24px;
+color: gray;
+}
+
+.brand {
+color: yellow;
+}
+
+.positive {
+border: 1px solid rgba(0,164,0,.8)
+}
+
+.negative {
+border: 1px solid rgba(164,0,0,.8)
+}
+
+.main {
+    margin: 100px;
+    padding: 100px 100px;
+    text-align: center;
+    width: 60%;
+    font-size: 1rem;
+    margin: auto;
+    background-color: rgb(255, 255, 255);
+}
+
+.navbar-nav > li{
+    margin-left:5px;
+    margin-right:5px;
+}
