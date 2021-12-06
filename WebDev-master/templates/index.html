@@ -24,13 +24,43 @@
             <br> </br>
             <button type="submit" class="btn btn-primary" value="Submit">Predict Stock Change</button>
         </form>
+        <hr>
+
+        <style type="text/css" media="screen">  
+          table {
+              padding:2px;
+              border-spacing:20px;
+              width:100%;
+          }
+  
+          table td{
+              border:1px solid black;
+              text-align: center;
+          }
+        </style>
+  
+        <p style="margin-right: 600px;">Results:</p>
+        <table>
+            <tr>
+                <td><strong>Positive</strong></td>
+                <td><strong>Neutral</strong></td>
+                <td><strong>Negative</strong></td>
+            </tr>
+          
+              <tr>
+                {% for portfolio in prediction %}
+                  <td>{{ portfolio }}</td>
+                {% endfor %}
+              </tr>
+        </table>
+        <hr>
     </div>       
-    <div>
+    <!-- <div>
         {% for portfolio in prediction %}
         
             <td>{{ portfolio }}</td>
 
         {% endfor %}
-    </div> 
+    </div>  -->
   </body>
 </html>

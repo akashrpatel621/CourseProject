@@ -5,21 +5,13 @@ from csv import writer
 import datetime
 import nltk
 from nltk.corpus import movie_reviews
-
 import numpy as np # linear algebra
-
-# Input data files are available in the read-only "../input/" directory
-# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
-
 import os
-
 import warnings
 warnings.simplefilter('ignore')
 import seaborn as sns
 sns.set()
-
 import random
-
 from pprint import pprint
 from datetime import datetime
 import collections
@@ -36,9 +28,7 @@ from requests.models import Response
 def main(stock):
     if(stock == ""):
         return
-    
 
-    #its bad practice to place your bearer token directly into the script (this is just done for illustration purposes)
     BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAGPOVwEAAAAA4TbpZHwB6%2FVrgW8WoHvHFvMmZJU%3DHshKMN00NxazKkbH2TGss2NZNCaCcCXLJsQL2B8AwwnIqPfEWQ"
     #define search twitter function
     def search_twitter(query, tweet_fields, bearer_token = BEARER_TOKEN):
@@ -57,6 +47,7 @@ def main(stock):
 
     #search term
     query = stock
+   
     #twitter fields to be returned by api call
     tweet_fields = "tweet.fields=text,author_id,created_at"
 
@@ -66,28 +57,15 @@ def main(stock):
 
     data = json_response['data']
     import csv
-
-    # open the file in the write mode
-    f = open('csv', 'w')
-
-    # create the csv writer
-    writer = csv.writer(f)
-
-
+   
     t = []
     # close the file
     for i in range(len(data)):
-        # write a row to the csv file
-        # writer.writerow(data[i]['text'])    
         t.append(data[i]['text'])
-    f.close()
-
+  
+    # switch filename to local path where dataset is saved
     file_name = "C:\\Users\\akashpatel\\Downloads\\tweets_labelled_09042020_16072020.csv"
     data = pd.read_csv(file_name, sep=';').set_index('id')
-
-
-
-    print(t, len(t))
 
     # Preprocess for runnning models
     # delete emoji, handle, url
@@ -206,6 +184,8 @@ def main(stock):
 
     arrange_text(data)
     train = data[data['sentiment'] == data['sentiment']]
+
+    # Formats the tweet as a tuple of token of words and its sentiment 
     def format_df(df):
         docs = []
         for row in df.iterrows():
@@ -214,10 +194,9 @@ def main(stock):
         return docs
     docs = format_df(train)
 
-
-
     random.shuffle(docs)
 
+    # Creates a dictionary with word counts in the document 
     def word_counts(docs):
         words = Counter()
         for pair in docs:
@@ -228,6 +207,7 @@ def main(stock):
 
     word_features = list(words)[:2000]
 
+    # Formats the data for nltk's testing and training purposes
     def document_features(document):
         document_words = set(document)
         features = {}
@@ -247,6 +227,7 @@ def main(stock):
 
     random.shuffle(documents)
 
+    # combine the movie reviews and twitter dataset
     dd = docs + documents
     check = [t[1] for t in dd]
     print(set(check))
@@ -267,11 +248,12 @@ def main(stock):
 
     test = testformat_df(test_set)
     random.shuffle(test)
-    # testwords = word_counts(test)
     testfeaturesets = [document_features(d) for (d) in test]
     a = []
     for t in testfeaturesets:
-        # break
         a.append(classifier.classify(t))
+
+    # aggregate the results as percentages for sentiments 
+
     a = Counter(a)
     return a
